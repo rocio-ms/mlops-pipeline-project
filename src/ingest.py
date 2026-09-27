@@ -165,15 +165,18 @@ def main():
     dataset     = PARAMS["data"].get("dataset", "fancyzhx/ag_news")
     max_samples = PARAMS["data"].get("max_samples")
 
-    if dataset == "fancyzhx/ag_news":
+    if dataset in ("ag_news", "fancyzhx/ag_news"):
         train_df, test_df = load_ag_news(max_samples=max_samples)
-    elif dataset == "truthlens":
-        csv_path = PARAMS["data"].get("truthlens_path", "data/raw/truthlens.csv")
-        train_df, test_df = load_truthlens(csv_path)
-    else:
-        raise ValueError(f"Unknown dataset: {dataset}. Use 'fancyzhx/ag_news' or 'truthlens'.")
 
-    # Validate both splits
+    elif dataset == "truthlens":
+        train_df, test_df = load_truthlens(max_samples=max_samples)
+
+    else:
+        raise ValueError(
+            f"Unknown dataset: {dataset}. "
+            "Use 'ag_news', 'fancyzhx/ag_news' or 'truthlens'."
+        )
+       
     train_report = validate_dataframe(train_df, "train")
     test_report  = validate_dataframe(test_df,  "test")
 
