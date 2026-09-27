@@ -38,7 +38,7 @@ def load_ag_news(max_samples: int | None = None) -> Tuple[pd.DataFrame, pd.DataF
     from datasets import load_dataset
 
     log.info("📥  Downloading AG News from HuggingFace …")
-    ds = load_dataset("ag_news")
+    ds = load_dataset("fancyzhx/ag_news")
 
     train_df = ds["train"].to_pandas()
     test_df  = ds["test"].to_pandas()
